@@ -1,0 +1,127 @@
+
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+:root {
+    --primary: #7467ff;
+    --secondary: #4938c7;
+    --accent: #00d9ff;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top left, #20245b 0%, transparent 45%),
+        linear-gradient(135deg, #080b18, #10152b) !important;
+    color: #eef2ff;
+}
+
+#header {
+    background: rgba(12, 17, 40, 0.96) !important;
+    border-bottom: 1px solid #4645a8;
+    box-shadow: 0 8px 30px #5145ff30;
+}
+
+#branding h1,
+#branding h1 a {
+    color: #80eaff !important;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.module,
+#content-main .module,
+.inline-group {
+    background: rgba(24, 31, 61, 0.88) !important;
+    border: 1px solid #424b83 !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    box-shadow: 0 12px 28px #0005, 0 0 18px #645bff15;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.module:hover,
+.inline-group:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 35px #0006, 0 0 22px #655bff35;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: linear-gradient(100deg, #35318a, #15577c) !important;
+    color: #ffffff !important;
+    padding: 13px !important;
+}
+
+a:link,
+a:visited {
+    color: #75e7ff;
+}
+
+a:hover {
+    color: #c1aaff;
+}
+
+#content {
+    padding: 24px;
+}
+
+#content h1 {
+    color: #e4e8ff;
+    font-weight: 800;
+}
+
+#user-tools {
+    color: #d5ddff;
+}
+
+div.breadcrumbs {
+    background: #171e3a !important;
+    color: #c9d5ff !important;
+}
+
+table thead th {
+    background: #222c52 !important;
+}
+
+tr:nth-child(even) {
+    background: #151c35;
+}
+
+input, select, textarea {
+    border-radius: 8px !important;
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input {
+    background: linear-gradient(110deg, #6556f5, #087fa9) !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    padding: 9px 16px !important;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.button:hover,
+input[type=submit]:hover,
+.submit-row input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px #6556f580;
+}
+
+#footer {
+    padding: 15px;
+}
+
+@media (max-width: 700px) {
+    #content {
+        padding: 12px;
+    }
+}
+</style>
+{% endblock %}
+

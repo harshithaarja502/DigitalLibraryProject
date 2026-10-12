@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Circulation History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 24px;
+            color: #eef2ff;
+            background: linear-gradient(135deg, #080b18, #171b3b);
+        }
+        h1 { color: #7deaff; }
+        .table-wrap {
+            overflow-x: auto;
+            padding: 12px;
+            border: 1px solid #454d85;
+            border-radius: 14px;
+            background: #1c2346;
+        }
+        table {
+            width: 100%;
+            min-width: 850px;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #41486c;
+        }
+        th { color: #83eaff; }
+        button, .back {
+            display: inline-block;
+            padding: 9px 13px;
+            color: white;
+            background: #6255e7;
+            border: 0;
+            border-radius: 7px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .overdue { color: #ff9aa8; }
+        .returned { color: #69f0ae; }
+    </style>
+</head>
+<body>
+    <h1>📚 Circulation History</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Member</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                    <th>Fine (₹)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in record_rows %}
+                    <tr>
+                        <td>{{ row.record.book.title }}</td>
+                        <td>{{ row.record.member.full_name }}</td>
+                        <td>{{ row.record.issue_date }}</td>
+                        <td>{{ row.record.due_date }}</td>
+                        <td>
+                            {{ row.record.returned_on|default:"Not returned" }}
+                        </td>
+                        <td>
+                            {% if row.status == "Overdue" %}
+                                <span class="overdue">Overdue</span>
+                            {% elif row.status == "Returned" %}
+                                <span class="returned">Returned</span>
+                            {% else %}
+                                Issued
+                            {% endif %}
+                        </td>
+                        <td>₹{{ row.current_fine|floatformat:2 }}</td>
+                        <td>
+                            {% if not row.record.returned_on %}
+                                <form
+                                    method="post"
+                                    action="{% url 'return_book' row.record.id %}"
+                                >
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        Return Book
+                                    </button>
+                                </form>
+                            {% else %}
+                                Completed
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No circulation records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        <a class="back" href="/">← Back to Library Home</a>
+    </p>
+</body>
+</html>
