@@ -8,6 +8,10 @@ Render will install dependencies, collect static files, apply migrations, and st
 the Django app with Gunicorn. The Blueprint generates a `SECRET_KEY` and configures
 production `DEBUG`, allowed hosts, and CSRF origins.
 
+During each deployment, the build also runs `python manage.py seed_demo_data` to
+create a small set of fictional authors, books, and members if they are not already
+present. This does not copy records from your local database.
+
 To create an admin account after the first deployment, open the Render shell and run:
 
 ```sh
