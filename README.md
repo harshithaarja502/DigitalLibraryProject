@@ -12,10 +12,10 @@ During each deployment, the build also runs `python manage.py seed_demo_data` to
 create a small set of fictional authors, books, and members if they are not already
 present. This does not copy records from your local database.
 
-The Blueprint also creates a `libraryadmin` superuser if it does not already exist.
-Render generates its password; view `DJANGO_SUPERUSER_PASSWORD` in the web service's
-Environment settings and use it to sign in at `/admin/`. The deployment command never
-resets the password of an existing admin account.
+On each service start, the Blueprint applies migrations, seeds demo records, and
+creates or updates the `libraryadmin` superuser. Render generates its password;
+view `DJANGO_SUPERUSER_PASSWORD` in the web service's Environment settings and use it
+to sign in at `/admin/`. The generated password is applied on each service start.
 
 To create an additional admin account manually, open the Render shell and run:
 

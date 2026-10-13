@@ -37,6 +37,14 @@ class EnsureAdminTests(TestCase):
         self.assertEqual(get_user_model().objects.count(), 1)
         self.assertTrue(user.check_password("test-password"))
 
+        with patch.dict(
+            "os.environ",
+            {"DJANGO_SUPERUSER_PASSWORD": "updated-test-password"},
+        ):
+            call_command("ensure_admin", "--reset-password")
+        user.refresh_from_db()
+        self.assertTrue(user.check_password("updated-test-password"))
+
     @patch.dict("os.environ", {}, clear=True)
     def test_command_requires_credentials(self):
         with self.assertRaises(CommandError):
