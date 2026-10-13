@@ -2,7 +2,6 @@ from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
-from django.core.management.base import CommandError
 from django.test import TestCase
 
 from .models import Author, Book, Member
@@ -46,6 +45,6 @@ class EnsureAdminTests(TestCase):
         self.assertTrue(user.check_password("updated-test-password"))
 
     @patch.dict("os.environ", {}, clear=True)
-    def test_command_requires_credentials(self):
-        with self.assertRaises(CommandError):
-            call_command("ensure_admin")
+    def test_command_skips_without_credentials(self):
+        call_command("ensure_admin")
+        self.assertEqual(get_user_model().objects.count(), 0)

@@ -20,10 +20,16 @@ class Command(BaseCommand):
         password = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "")
 
         if not username or not email or not password:
-            raise CommandError(
-                "Set DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, "
-                "and DJANGO_SUPERUSER_PASSWORD to provision the admin account."
+            self.stdout.write(
+                self.style.WARNING(
+                    "Admin account provisioning skipped: set "
+                    "DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and "
+                    "DJANGO_SUPERUSER_PASSWORD to create it automatically. "
+                    "You can create an account manually with "
+                    "'python manage.py createsuperuser'."
+                )
             )
+            return
 
         user_model = get_user_model()
         existing_user = user_model._default_manager.filter(
