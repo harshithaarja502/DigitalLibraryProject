@@ -7,13 +7,6 @@ from django.core.management.base import BaseCommand, CommandError
 class Command(BaseCommand):
     help = "Create the configured Django superuser if it does not exist."
 
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "--reset-password",
-            action="store_true",
-            help="Set an existing superuser's password to the configured value.",
-        )
-
     def handle(self, *args, **options):
         username = os.environ.get("DJANGO_SUPERUSER_USERNAME", "").strip()
         email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "").strip()
@@ -40,14 +33,6 @@ class Command(BaseCommand):
                 raise CommandError(
                     f"User '{username}' already exists but is not a superuser."
                 )
-            if options["reset_password"]:
-                existing_user.email = email
-                existing_user.set_password(password)
-                existing_user.save(update_fields=["email", "password"])
-                self.stdout.write(
-                    self.style.SUCCESS("Configured admin credentials updated.")
-                )
-                return
             self.stdout.write("Configured admin account already exists.")
             return
 

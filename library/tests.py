@@ -40,9 +40,9 @@ class EnsureAdminTests(TestCase):
             "os.environ",
             {"DJANGO_SUPERUSER_PASSWORD": "updated-test-password"},
         ):
-            call_command("ensure_admin", "--reset-password")
+            call_command("ensure_admin")
         user.refresh_from_db()
-        self.assertTrue(user.check_password("updated-test-password"))
+        self.assertTrue(user.check_password("test-password"))
 
     @patch.dict("os.environ", {}, clear=True)
     def test_command_skips_without_credentials(self):
