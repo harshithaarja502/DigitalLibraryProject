@@ -21,14 +21,14 @@ class EnsureAdminTests(TestCase):
     @patch.dict(
         "os.environ",
         {
-            "DJANGO_SUPERUSER_USERNAME": "libraryadmin",
-            "DJANGO_SUPERUSER_EMAIL": "libraryadmin@example.com",
+            "DJANGO_SUPERUSER_USERNAME": "admin",
+            "DJANGO_SUPERUSER_EMAIL": "admin@example.com",
             "DJANGO_SUPERUSER_PASSWORD": "test-password",
         },
     )
     def test_command_creates_superuser_once(self):
         call_command("ensure_admin")
-        user = get_user_model().objects.get(username="libraryadmin")
+        user = get_user_model().objects.get(username="admin")
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.check_password("test-password"))
 

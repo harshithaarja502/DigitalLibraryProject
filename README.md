@@ -13,9 +13,12 @@ create a small set of fictional authors, books, and members if they are not alre
 present. This does not copy records from your local database.
 
 On each service start, the Blueprint applies migrations, seeds demo records, and
-creates the `libraryadmin` superuser if it does not exist. Render generates its
-initial password; view `DJANGO_SUPERUSER_PASSWORD` in the web service's Environment
-settings to sign in at `/admin/`. Existing admin passwords are never reset by startup.
+creates the `admin` superuser if it does not exist. Set
+`DJANGO_SUPERUSER_PASSWORD` in the Render web service's Environment settings; the
+password is intentionally not stored in this repository. To use the requested demo
+credentials, set it to `admin123` and sign in at `/admin/` with username `admin`.
+Startup does not reset an existing account's password, so you can change it after
+signing in. `admin123` is weak; use only for a temporary demo and change it promptly.
 
 To create an additional admin account manually, open the Render shell and run:
 

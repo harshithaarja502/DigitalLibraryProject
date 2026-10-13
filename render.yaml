@@ -15,11 +15,11 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DJANGO_SUPERUSER_USERNAME
-        value: libraryadmin
+        value: admin
       - key: DJANGO_SUPERUSER_EMAIL
-        value: libraryadmin@example.com
+        value: admin@example.com
       - key: DJANGO_SUPERUSER_PASSWORD
-        generateValue: true
+        sync: false
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
